@@ -1,0 +1,1 @@
+lastVehicleSpawned = cursorObject; //FrostB: Sets the identity of the last spawned vehicle to the specific player
