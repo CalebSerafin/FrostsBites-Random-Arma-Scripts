@@ -4,7 +4,7 @@
 ///         Personal Version            ///
 ///          Look at Vehicle            ///
 ///////////////////////////////////////////
-lastVehicleSpawned = cursorObject; //FrostB: Sets the identity of the last spawned vehicle to the specific player
+lastVehicleSpawned = cursorObject;
 
 ///////////////////////////////////////////
 ///           Share Version             ///
@@ -29,10 +29,6 @@ _getPlayerObject = {
 	} forEach _allPlayers;
 	_playerObject; 
 };
-_changeLastVeh = {
-	params["_newVeh"];
-	lastVehicleSpawned = _newVeh;
-};
 {
 	_target = _x call _getPlayerObject;
 	[_newVeh,{lastVehicleSpawned = _this;}] remoteExec ["call", _target, false];
@@ -41,12 +37,26 @@ hint format ["%1 shared.",TypeOf _newVeh];
 
 ///////////////////////////////////////////
 ///     Co-Op and Remote Version        ///
-///     Look at Vehicle - Compact       ///
+///    Look at Vehicle - Compact 2      ///
 ///////////////////////////////////////////
 _team = ["FrostsBite","Digital","Cipher","Alain2376"];
-_newVeh = cursorObject;
-_getPlayerObject = {params["_name"];_allPlayers = call BIS_fnc_listPlayers;_playerObject = objNull;
-{if (name _x == _name) exitWith {_playerObject = _x};} forEach _allPlayers;_playerObject;};
-_changeLastVeh = { params["_newVeh"];lastVehicleSpawned = _newVeh;};
-{_target = _x call _getPlayerObject;[_newVeh,{lastVehicleSpawned = _this;}] remoteExec ["call", _target, false];
-} forEach _team;hint format ["%1 shared.",TypeOf _newVeh];
+{
+	_name = _x;
+	_allPlayers = call BIS_fnc_listPlayers; //Excludes HC without using array subtraction
+	_target = objNull;
+	{
+		if (name _x == _name) exitWith {_target = _x};
+	} forEach _allPlayers;
+	[cursorObject,{lastVehicleSpawned = _this;}] remoteExec ["call", _target, false];
+} forEach _team;
+hint format ["%1 shared.",TypeOf cursorObject];
+
+///////////////////////////////////////////
+///     Co-Op and Remote Version        ///
+///    Look at Vehicle - Compact 3      ///
+///////////////////////////////////////////
+_team = ["FrostsBite","Digital","Cipher","Alain2376"];
+{_name = _x;_allPlayers = call BIS_fnc_listPlayers;_target = objNull;
+{if (name _x == _name) exitWith {_target = _x};} forEach _allPlayers;
+[cursorObject,{lastVehicleSpawned = _this;}] remoteExec ["call", _target, false];
+} forEach _team;hint format ["%1 shared.",TypeOf cursorObject];
