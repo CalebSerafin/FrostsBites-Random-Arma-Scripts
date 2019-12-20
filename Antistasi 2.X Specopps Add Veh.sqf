@@ -10,7 +10,7 @@ lastVehicleSpawned = cursorObject; //FrostB: Sets the identity of the last spawn
 ///           Share Version             ///
 ///          Look at player             ///
 ///////////////////////////////////////////
-cursorObject setVariable ["lastVehicleSpawned",lastVehicleSpawned];
+[lastVehicleSpawned,{lastVehicleSpawned = _this;}] remoteExec ["call", cursorObject, false];
 
 ///////////////////////////////////////////
 ///     Co-Op and Remote Version        ///
@@ -37,7 +37,7 @@ _changeLastVeh = {
 	_target = _x call _getPlayerObject;
 	[_newVeh,{lastVehicleSpawned = _this;}] remoteExec ["call", _target, false];
 } forEach _team;
-	hint format ["%1 shared.",TypeOf _newVeh];
+hint format ["%1 shared.",TypeOf _newVeh];
 
 ///////////////////////////////////////////
 ///     Co-Op and Remote Version        ///
