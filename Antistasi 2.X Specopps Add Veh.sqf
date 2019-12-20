@@ -1,5 +1,7 @@
+///ALL EXEC LOCAL!!!!!!!!!!
+
 ///////////////////////////////////////////
-///	      	Personal Version            ///
+///         Personal Version            ///
 ///          Look at Vehicle            ///
 ///////////////////////////////////////////
 lastVehicleSpawned = cursorObject; //FrostB: Sets the identity of the last spawned vehicle to the specific player
@@ -11,13 +13,12 @@ lastVehicleSpawned = cursorObject; //FrostB: Sets the identity of the last spawn
 cursorObject setVariable ["lastVehicleSpawned",lastVehicleSpawned];
 
 ///////////////////////////////////////////
-///		Co-Op and Remote Version        ///
+///     Co-Op and Remote Version        ///
 ///          Look at Vehicle            ///
 ///////////////////////////////////////////
+_team = ["FrostsBite","Digital","Cipher","Alain2376"];
 _newVeh = cursorObject;
-_team = ["FrostsBite","Digital","Cipher"];
-
-getPlayerObject = {
+_getPlayerObject = {
 	//Kindly made by Caleb Serafin
 	params["_name"]; 	//Return Player Object
 
@@ -28,6 +29,24 @@ getPlayerObject = {
 	} forEach _allPlayers;
 	_playerObject; 
 };
+_changeLastVeh = {
+	params["_newVeh"];
+	lastVehicleSpawned = _newVeh;
+};
 {
-	(_x call getPlayerObject) setVariable ["lastVehicleSpawned",_newVeh]
+	_target = _x call _getPlayerObject;
+	[_newVeh,{lastVehicleSpawned = _this;}] remoteExec ["call", _target, false];
 } forEach _team;
+	hint format ["%1 shared.",TypeOf _newVeh];
+
+///////////////////////////////////////////
+///     Co-Op and Remote Version        ///
+///     Look at Vehicle - Compact       ///
+///////////////////////////////////////////
+_team = ["FrostsBite","Digital","Cipher","Alain2376"];
+_newVeh = cursorObject;
+_getPlayerObject = {params["_name"];_allPlayers = call BIS_fnc_listPlayers;_playerObject = objNull;
+{if (name _x == _name) exitWith {_playerObject = _x};} forEach _allPlayers;_playerObject;};
+_changeLastVeh = { params["_newVeh"];lastVehicleSpawned = _newVeh;};
+{_target = _x call _getPlayerObject;[_newVeh,{lastVehicleSpawned = _this;}] remoteExec ["call", _target, false];
+} forEach _team;hint format ["%1 shared.",TypeOf _newVeh];
