@@ -1,0 +1,1 @@
+[] execVM "fn_advancedTowingInit.sqf";
