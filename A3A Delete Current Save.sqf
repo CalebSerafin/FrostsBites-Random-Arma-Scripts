@@ -5,12 +5,10 @@ Script:
 Description:
 	Deletes the current save loaded.
 	Be careful!
+	REMOVED THIS HEADER WHEN TRYING TO RUN IN DEBUG CONSOLE.
 
 Returns:
 	<BOOLEAN> true if it hasn't crashed; nil if it has crashed.
-
-Examples:
-	
 
 Author: Caleb Serafin
 License: MIT License, Copyright (c) 2019 Caleb Sebastian Serafin
