@@ -1,3 +1,5 @@
+// Execute this as Local if the _target is to be given 3rd person.
+// If you set _targeg as player and execute as global, everyone will be given 3rd person.
 // uncomment the target you want, re comment other other one.
 private _target = player;
 //private _target = cursorObject;
